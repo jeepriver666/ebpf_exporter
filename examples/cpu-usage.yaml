@@ -1,0 +1,29 @@
+metrics:
+  counters:
+    - name: raw_sched_switch
+      help: Number of sched:sched_migrate_task events per cpu
+      labels:
+        - name: cpu_num
+          size: 8
+          decoders:
+            - name: uint
+        - name: pid
+          size: 8
+          decoders:
+            - name: uint
+    - name: raw_sched_switch_pid_count
+      help: Number of sched:sched_migrate_task events per thread
+      labels:
+        - name: cpu_num
+          size: 8
+          decoders:
+            - name: uint
+        - name: pid
+          size: 8
+          decoders:
+            - name: uint
+
+
+
+
+
