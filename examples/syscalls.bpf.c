@@ -1,4 +1,4 @@
-#include <vmlinux.h>
+#include "vmlinux.h"
 #include <bpf/bpf_tracing.h>
 #include "maps.bpf.h"
 
@@ -7,13 +7,12 @@ struct {
     __uint(max_entries, 1024);
     __type(key, u64);
     __type(value, u64);
-} timer_starts_total SEC(".maps");
+} syscalls_total SEC(".maps");
 
-SEC("tp_btf/timer_start")
-int BPF_PROG(timer_start, struct timer_list *timer)
+SEC("tp_btf/sys_enter")
+int BPF_PROG(sys_enter, struct pt_regs *regs, long id)
 {
-    u64 function = (u64) timer->function;
-    increment_map(&timer_starts_total, &function, 1);
+    increment_map(&syscalls_total, &id, 1);
     return 0;
 }
 
